@@ -86,3 +86,14 @@ clear
 sudo apt install jenkins
 clear
 fish
+clear
+docker ps
+docker ps -a
+clear
+docker start reactjs-cont
+docker ps -a
+clear
+git add .
+git status
+git commit -m "adding test to the pipeline"
+git push -u origin master

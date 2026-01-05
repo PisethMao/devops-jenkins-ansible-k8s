@@ -24,8 +24,23 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    docker build -t jenkins-react-pipeline .
+                    docker build -t pisethmao/jenkins-react-pipeline .
                 '''
+            }
+        }
+
+        stage('Push to Dockerhub') {
+            steps {
+                withCredentials([gitUsernamePassword(
+                    credentialsId: 'DOCKERHUB',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --stdin
+                        docker push pisethmao/jenkins-react-pipeline
+                    ''' 
+                }
             }
         }
 
