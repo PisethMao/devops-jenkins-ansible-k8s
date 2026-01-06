@@ -1,7 +1,20 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'myreactjs-image'
+        DOCKER_USERNAME = 'pisethmao'
+    }
+
     stages {
+        stage('Show ENV Variable') {
+            steps {
+                sh '''
+                    echo "Full image name is: $DOCKER_USERNAME/$DOCKER_IMAGE"
+                '''
+            }
+        }
+
         stage('Deploy Nginx Container') {
             steps {
                 sh '''
@@ -12,7 +25,6 @@ pipeline {
                     def nginxApp = docker.image('nginx:trixie-perl')
                     nginxApp.inside {
                         sh '''
-                            whoami
                             ls -lrt
                             nginx -v
                         '''
