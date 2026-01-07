@@ -3,7 +3,7 @@ domain_name="$1"
 service_port="$2"
 if [ -z $domain_name ]; then
     echo "Domain name must not be empty.";
-    esit 1
+    exit 1
 fi
 if [ -z $service_port ]; then
     echo "Service port must be provided.";
@@ -27,6 +27,9 @@ else
             proxy_set_header X-Real-IP \$remote_addr;
             proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto \$scheme;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade \$http_upgrade;
+            proxy_set_header Connection upgrade;
         }
     }
 EOF
