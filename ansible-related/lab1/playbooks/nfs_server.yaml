@@ -9,6 +9,9 @@
     nfs_remote_dir: /srv/nfs_shared
     nfs_client_ip1: 35.198.233.195
     nfs_client_ip2: 34.177.80.31
+    nfs_client_ips:
+      - 35.198.233.195
+      - 34.177.80.31
   tasks:
     - name: Update APT Caches
       apt:
@@ -27,13 +30,18 @@
     # Configuration inside /etc/exports (tell which clients can use it)
     - name: Write Config On /etc/exports
       # lineinfile:
+      vars:
+        export_entries: >-
+          {{nfs_client_ips | map('regex_replace', '^(.*)$', '\g<1>(rw,sync,no_subtree_check,no_root_squash)') | join(' ')}}
       blockinfile:
         path: /etc/exports
         # line: "{{nfs_remote_dir}} *(rw, sync, no_subtree_check, no_root_squash)"
         # line: "{{nfs_remote_dir}} {{nfs_client_ip1}}(rw,sync,no_subtree_check,no_root_squash) {{nfs_client_ip2}}(rw,sync,no_subtree_check,no_root_squash)"
-        block: | 
-          {{nfs_remote_dir}} {{nfs_client_ip1}}(rw,sync,no_subtree_check,no_root_squash) 
-          {{nfs_remote_dir}} {{nfs_client_ip2}}(rw,sync,no_subtree_check,no_root_squash)
+        # block: | 
+        #   {{nfs_remote_dir}} {{nfs_client_ip1}}(rw,sync,no_subtree_check,no_root_squash) 
+        #   {{nfs_remote_dir}} {{nfs_client_ip2}}(rw,sync,no_subtree_check,no_root_squash)
+        block: |
+          {{nfs_remote_dir}} {{export_entries}}
         state: present
         create: yes
     - name: Apply Configuration
