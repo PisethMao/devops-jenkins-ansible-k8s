@@ -1,0 +1,16 @@
+---
+- name: Deploy Database
+  hosts: worker2
+  vars_files:
+    - ../vars/database_credential.yaml
+  tasks:
+    - name: Deploy Database Server
+      become: true
+      debug:
+        msg:
+          "Deploying PostgreSQL database server with the following credentials:
+          Username={{ db_username }},
+          Password={{ db_password }},
+          Host={{ db_host }},
+          Port={{ db_port }},
+          Database Name={{ db_name }}"
