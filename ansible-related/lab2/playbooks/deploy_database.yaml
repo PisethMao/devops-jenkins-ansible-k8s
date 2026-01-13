@@ -2,7 +2,7 @@
 - name: Deploy Database
   hosts: worker2
   vars_files:
-    - ../vars/database_credential.yaml
+    - ../vars/vault_db_credential.yaml
   tasks:
     - name: Deploy Database Server
       become: true
