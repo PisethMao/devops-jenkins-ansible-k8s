@@ -105,3 +105,6 @@ fis
 fish
 clear
 fish
+clear
+lear
+clear
