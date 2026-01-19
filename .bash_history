@@ -108,3 +108,9 @@ fish
 clear
 lear
 clear
+exit
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+claer
+clear
+fish
