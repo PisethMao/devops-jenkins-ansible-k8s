@@ -1,0 +1,33 @@
+- name: Update APT Caches
+  apt:
+    update_cache: yes
+- name: Install NFS Kernel Server
+  apt:
+    name: nfs-kernel-server
+    state: present
+- name: Create Shared Directory To Used
+  file:
+    path: "{{nfs_server.mount_path}}"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: "0777"
+- name: Write Config On /etc/exports
+  vars:
+    export_entries: >-
+      {{ nfs_client.ips
+         | map('regex_replace', '^(.*)$', '\g<1>(rw,sync,no_subtree_check,no_root_squash)')
+         | join(' ') }}
+  blockinfile:
+    path: /etc/exports
+    block: |
+      {{ nfs_server.mount_path }} {{ export_entries }}
+    state: present
+    create: yes
+- name: Apply The Configuration
+  command: exportfs -ra
+- name: Restart The NFS Kernel Service
+  systemd:
+    name: nfs-kernel-server
+    enabled: true
+    state: restarted

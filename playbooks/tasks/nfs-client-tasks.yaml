@@ -1,0 +1,28 @@
+- name: Update APT Caches
+  apt:
+    update_cache: yes
+- name: Install NFS Client
+  apt:
+    name: nfs-common
+    state: present
+- name: Create Local Mount Point
+  file:
+    path: "{{nfs_client.mount_path}}"
+    state: directory
+    owner: "nobody"
+    group: "nogroup"
+    mode: "0777"
+- name: Mount To NFS Server
+  mount:
+    src: "{{nfs_server.ip}}:{{nfs_server.mount_path}}"
+    path: "{{nfs_client.mount_path}}"
+    fstype: nfs
+    opts: "defaults,_netdev"
+    state: mounted
+- name: Persist After Restart
+  mount:
+    src: "{{nfs_server.ip}}:{{nfs_server.mount_path}}"
+    path: "{{nfs_client.mount_path}}"
+    fstype: nfs
+    opts: defaults, _netdev
+    state: present
