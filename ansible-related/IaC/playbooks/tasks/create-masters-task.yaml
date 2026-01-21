@@ -1,8 +1,53 @@
-- name: Create Master Machines
-  hosts: localhost
-  var_files:
-    - ../vars/machines.yaml
-  block:
-    - name: Debug Variable Inside machine.yaml
-      debug:
-        msg: "{{ ssh_pubkey_path }}"
+- name: Loop To Show Machines Specs
+  debug:
+    msg: |
+      Machine Name: {{item.name}}
+  loop: "{{machines_info}}"
+  when: true
+- name: Slurp Public Key From Local Machine
+  slurp:
+    src: "{{ssh_pubkey_path}}"
+  register: ssh_pubkey
+  when: true
+- name: Create GCP Instance
+  google.cloud.gcp_compute_instance:
+    name: "{{item.name}}"
+    machine_type: "{{item.machine_type}}"
+    zone: "{{item.zone}}"
+    project: "{{google_project_id}}"
+    auth_kind: "serviceaccount"
+    service_account_file: "{{service_account_path}}"
+    state: present
+    metadata:
+      ssh-keys: "user:{{ssh_pubkey['content'] | b64decode}}"
+    disks:
+      - auto_delete: true
+        boot: true
+        initialize_params: 
+          source_image: "{{item.image}}"
+          disk_size_gb: "{{item.disk_size}}"
+          disk_type: "{{item.disk_type}}"
+    network_interfaces:
+      - network:
+          selfLink: "projects/{{google_project_id}}/global/networks/default"
+        access_configs:
+          - name: External NAT
+            type: ONE_TO_ONE_NAT
+    tags:
+      items:
+        - http-server
+        - https-server
+  loop: "{{machines_info}}"
+  register: gcp_instances
+  when:
+    - item.name == "master01"
+- name: Write GCP_Instances Into JSON File
+  copy:
+    content: "{{gcp_instances}}"
+    dest: "./gcp_more_instances.json"
+  when: true
+- name: Create Iventory From Template
+  template:
+    src: "../templates/masters-inventory.j2"
+    dest: ../inventory.ini
+  when: true

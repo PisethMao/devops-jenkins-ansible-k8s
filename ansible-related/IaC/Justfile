@@ -2,3 +2,8 @@
 create-instance:
     echo "Create First Google instance with SSH public key"
     ansible-playbook playbooks/create-gcp-instance.yaml
+iac:
+    echo "Create masters and workers"
+    ansible-playbook playbooks/create-masters-instance.yaml
+    echo "Create all the workers...!!!"
+    ansible-playbook playbooks/create-workers-instance.yaml
