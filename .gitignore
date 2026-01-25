@@ -21,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 .env
 ansible-related/IaC/google-service-account.json
+# Local credentials
+ansible-related/IaC/credentials/
+*.json
