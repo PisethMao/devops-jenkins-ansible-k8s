@@ -42,7 +42,7 @@
   loop: "{{machines_info}}"
   register: gcp_workers_instances
   when:
-    - item.name != "master01"
+    - item.name not in ["master02", "master03"]
 - name: Register The Existing Inventory File
   slurp:
     src: "../inventory.ini"

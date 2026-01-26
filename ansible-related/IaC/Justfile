@@ -3,9 +3,15 @@ create-instance:
     echo "Create First Google instance with SSH public key"
     ansible-playbook playbooks/create-gcp-instance.yaml
 iac:
-    echo "Create masters and workers"
+    echo "Create All the Masters...!!!"
     ansible-playbook playbooks/create-masters-instance.yaml
     echo "Create all the workers...!!!"
+    ansible-playbook playbooks/create-workers-instance.yaml
+create-masters:
+    echo "😀 Create All the masters...!!!"
+    ansible-playbook playbooks/create-masters-instance.yaml
+create-workers:
+    echo "😁 Create All the workers...!!!"
     ansible-playbook playbooks/create-workers-instance.yaml
 destroy:
     ansible-playbook playbooks/destroy.yaml

@@ -40,7 +40,7 @@
   loop: "{{machines_info}}"
   register: gcp_instances
   when:
-    - item.name == "master01"
+    - item.name in ["master02", "master03"] 
 - name: Write GCP_Instances Into JSON File
   copy:
     content: "{{gcp_instances}}"

@@ -18,7 +18,13 @@ ubuntu_specs:
   v24:
     image: "projects/ubuntu-os-cloud/global/images/family/ubuntu-2404-lts"
 machines_info:
-  - name: "master01"
+  - name: "master02"
+    machine_type: "{{machines_specs.large.machine_type}}"
+    image: "{{ubuntu_specs.v22.image}}"
+    zone: "{{machines_specs.large.zone}}"
+    disk_size: "{{machines_specs.large.disk_size}}"
+    disk_type: "{{machines_specs.large.disk_type}}"
+  - name: "master03"
     machine_type: "{{machines_specs.large.machine_type}}"
     image: "{{ubuntu_specs.v22.image}}"
     zone: "{{machines_specs.large.zone}}"

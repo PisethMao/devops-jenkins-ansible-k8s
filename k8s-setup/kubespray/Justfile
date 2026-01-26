@@ -1,0 +1,7 @@
+#!/bin/bash
+setup-cluster:
+    echo "Bringing the HA Cluster of K8S...!!!"
+    ansible-playbook -b -v -i inventory/sample/inventory.ini cluster.yml
+destroy-cluster:
+    echo "Reset the Whole HA Cluster of K8S...!!!"
+    ansible-playbook -b -v -i inventory/sample/inventory.ini reset.yml
