@@ -148,3 +148,12 @@ fish
 clear
 fish
 exit
+source /home/user/.venvs/ansible-tools/bin/activate
+clear
+fish
+source /home/user/.venvs/ansible-tools/bin/activate
+cler
+clear
+fish
+source /home/user/.venvs/ansible-tools/bin/activate
+source /home/user/.venvs/ansible-tools/bin/activate

@@ -1,0 +1,10 @@
+---
+- name: Using Vault In The Playbooks
+  hosts: localhost
+  become: true
+  vars_files:
+    - ../vars/my-setup-vars.yaml
+  tasks:
+    - name: Debug Values From Variables
+      debug:
+        msg: "API-Key {{API_KEY}} \n Database-User is: {{DATABASE_USER}} \n Database-Pass is: {{DATABASE_PASS}}"

@@ -27,3 +27,5 @@ ansible-related/IaC/credentials/
 
 # Local credentials
 ansible-related/IaC/credentials/
+ansible-related/lab1/secrets/vault-pass1.txt
+ansible-related/lab1/secrets/vault-pass2.txt
