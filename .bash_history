@@ -157,3 +157,25 @@ clear
 fish
 source /home/user/.venvs/ansible-tools/bin/activate
 source /home/user/.venvs/ansible-tools/bin/activate
+clear
+fish
+exit
+source /home/user/.venvs/ansible-tools/bin/activate
+clear
+fish
+source /home/user/.venvs/ansible-tools/bin/activate
+clear
+deactivate
+clear
+fish
+claer
+fish
+clear
+fish
+clear
+fish
+clear
+fish
+source /home/user/.venvs/ansible-tools/bin/activate
+clear
+fish
