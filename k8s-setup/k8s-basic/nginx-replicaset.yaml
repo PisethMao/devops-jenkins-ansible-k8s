@@ -8,11 +8,13 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      key: nginx-replica-lbl
+      # key: nginx-replica-lbl
+      app: nginx-replica-lbl
   template:
     metadata:
       labels:
-        key: nginx-replica-lbl
+        # key: nginx-replica-lbl
+        app: nginx-replica-lbl
     spec:
       containers:
         - name: nginx-container
